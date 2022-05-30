@@ -18,6 +18,7 @@ function load() {
 		.then(data => {
 			todolistObj = data;
 			getToDoList(data);
+			updatebtn();
 			deletebtn();
 
 		})
@@ -73,21 +74,28 @@ function submit() {
 
 function updatebtn() {
 	const updateBtn = document.querySelectorAll(".update-btn");
+	const contentdata = document.querySelectorAll(".content-data");
 	for (let i = 0; i < updateBtn.length; i++) {
 		updateBtn[i].onclick = () => {
 			let url = `api/v1/todo/${todolistObj[i].id}`;
 			let option = {
-				method : "put"
+				method: "put",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					content: contentdata[i].value
+				})
 			}
-			fetch(url,option)
-			.then(response =>{
-				if(response.ok){
-					return response.json();
-				}else{
-					throw new Error(response.json());
-				}
-			})
-	}
+			fetch(url, option)
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					} else {
+						throw new Error(response.json());
+					}
+				})
+		}
 	}
 }
 
