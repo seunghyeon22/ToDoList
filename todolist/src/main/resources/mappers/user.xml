@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.todolist.domain.auth.UserRepository">
+
+<select id="findUserByUsername" parameterType="String" resultType="com.springboot.todolist.domain.auth.User">
+select
+	usercode,
+	username,
+	password,
+	name,
+	email
+from 
+user_mst
+where
+	username =#{username}
+
+</select>
+
+<insert id="save" parameterType="com.springboot.todolist.domain.auth.User">
+insert into
+user_mst
+values(
+0,
+#{username},
+#{password},
+#{name},
+#{email},
+now(),
+now()
+);
+</insert>
+
+</mapper>
